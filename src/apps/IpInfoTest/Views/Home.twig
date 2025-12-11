@@ -1,0 +1,90 @@
+<h1 class="app-main-title">IP Info Test</h1>
+
+<div class="card mt-2 p-2 w-full flex flex-col gap-4">
+
+  {# FORMULÁR NA ZADANIE IP #}
+  <form action="" method="GET" class="flex flex-col gap-2">
+    <label class="font-semibold" for="ip-input">IP adresa</label>
+    <div class="flex gap-2 items-center">
+      <input
+        id="ip-input"
+        name="ip"
+        class="w-full"
+        placeholder="Zadaj IP, napr. 8.8.8.8"
+        value="{{ viewParams.ip|e }}"
+      />
+      <button type="submit" class="btn btn-primary">
+        <span class="text">Načítať informácie</span>
+      </button>
+    </div>
+    <p class="text-xs text-slate-500">
+      Úloha: načítať informácie o IP adrese z externého API a zobraziť ich používateľovi.
+    </p>
+  </form>
+
+  {# CHYBA Z BACKENDU #}
+  {% if viewParams.error %}
+    <div class="alert alert-error mt-2">
+      <span>{{ viewParams.error }}</span>
+    </div>
+  {% endif %}
+
+  {# VÝSLEDOK – PREHĽADNÁ TABUĽKA #}
+  {% if viewParams.result %}
+    {% set r = viewParams.result %}
+    <div class="mt-4">
+      <h2 class="text-lg font-semibold mb-2">Výsledok pre IP {{ r.ip }}</h2>
+
+      <table class="table table-sm w-full">
+        <tbody>
+          <tr>
+            <th class="w-48">IP adresa</th>
+            <td>{{ r.ip }}</td>
+          </tr>
+          <tr>
+            <th>Krajina</th>
+            <td>{{ r.country ?? '—' }}</td>
+          </tr>
+          <tr>
+            <th>Mesto</th>
+            <td>{{ r.city ?? '—' }}</td>
+          </tr>
+          <tr>
+            <th>Timezone</th>
+            <td>{{ r.timezone ?? '—' }}</td>
+          </tr>
+          <tr>
+            <th>ISP / ASN</th>
+            <td>{{ r.isp ?? '—' }}</td>
+          </tr>
+          <tr>
+            <th>GPS súradnice</th>
+            <td>
+              {% if r.lat and r.lon %}
+                {{ r.lat }}, {{ r.lon }}
+              {% else %}
+                —
+              {% endif %}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      {# Toto tlačidlo využijeme v ďalšom kroku pri ukladaní medzi obľúbené #}
+      <div class="mt-3">
+        <button type="button" class="btn btn-transparent" disabled>
+          <span class="text">Uložiť medzi obľúbené (pripravíme v ďalšom kroku)</span>
+        </button>
+      </div>
+    </div>
+  {% endif %}
+
+  {# PLACEHOLDER PRE OBLÚBENÉ IP – zatiaľ len text, model pridáme neskôr #}
+  <div class="mt-6">
+    <h2 class="text-lg font-semibold mb-2">Obľúbené IP adresy</h2>
+    <p class="text-sm text-slate-600">
+      Tu sa neskôr zobrazí zoznam obľúbených IP adries z vlastného modelu.
+      Najprv sme implementovali základ: vyhľadanie a zobrazenie informácií o jednej IP.
+    </p>
+  </div>
+</div>
