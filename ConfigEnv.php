@@ -19,9 +19,9 @@ $config['uploadFolder'] = __DIR__ . '/upload';
 
 // urls
 $config['rewriteBase'] = "/";
-$config['projectUrl'] = 'http://localhost:8000/';
+$config['projectUrl'] = 'http://localhost:8000';
 $config['assetsUrl'] = 'http://localhost:8000/vendor/hubleto/assets';
-$config['uploadUrl'] = 'http://localhost//upload';
+$config['uploadUrl'] = 'http://localhost:8000/upload';
 
 // sanitize dirs and urls based on used release
 $config['releaseFolder'] = str_replace('__RELEASE__', $config['release'], $config['releaseFolder']);
